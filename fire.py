@@ -1,24 +1,25 @@
 import pygame
 import numpy
+from random import randint
 
 buffer = numpy.zeros((320,200), numpy.int8)
 colour_map = numpy.zeros((256, 3))
 for i in range(0,64):
-        colour_map[i][0] = 255
-        colour_map[i][1] = i * 4
-        colour_map[i][2] = 255 - (i * 4)
+        colour_map[i][0] = i * 4
+        colour_map[i][1] = 0
+        colour_map[i][2] = 0
         
-        colour_map[i+64][0] = 255 - (i * 4)     
-        colour_map[i+64][1] = 255 
-        colour_map[i+64][2] = (i * 4)
+        colour_map[i+128][0] = 255
+        colour_map[i+64][1] = i * 2
+        colour_map[i+64][2] = 0
             
-        colour_map[i+128][0] = 0     
-        colour_map[i+128][1] = 255 - (i * 4)
-        colour_map[i+128][2] = 255
+        colour_map[i+128][0] = 255     
+        colour_map[i+128][1] = 128 + i * 2
+        colour_map[i+128][2] = i * 2
      
-        colour_map[i+192][0] = i * 4        
-        colour_map[i+192][1] = 0  
-        colour_map[i+192][2] = 255   
+        colour_map[i+192][0] = 255        
+        colour_map[i+192][1] = 255
+        colour_map[i+192][2] = 128 + i * 2
 
 # pygame setup
 pygame.init()
