@@ -1,9 +1,18 @@
 import pygame
 import numpy
-from random import randint
+import random
+
 
 buffer = numpy.zeros((320,200), numpy.int8)
 colour_map = numpy.zeros((256, 3))
+
+def add_fire():
+     
+     for x in range(0,320):
+        buffer[x][199] = random.randint(0,255)          
+
+
+
 for i in range(0,64):
         colour_map[i][0] = i * 4
         colour_map[i][1] = 0
@@ -33,8 +42,6 @@ screen.blit(surface,(0,0))
 running = True
 # dt = 0
 
-# player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
-
 while running:
     # poll for events
     # pygame.QUIT event means the user clicked X to close your window
@@ -42,6 +49,9 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+    add_fire()
+    pygame.surfarray.blit_array(surface, buffer)
+    screen.blit(surface,(0,0))
 
     # flip() the display to put your work on screen
     pygame.display.flip()
@@ -52,3 +62,7 @@ while running:
     # dt = clock.tick(60) / 1000
 
 pygame.quit()
+
+
+
+     
