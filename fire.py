@@ -1,23 +1,31 @@
 import pygame
-import numpy
+import numpy as np
 import random
 
-width = 64
-height = 48
-screen_width = 640
-screen_height = 480
-membuffer = numpy.zeros((width,height), numpy.int8)
-colour_map = numpy.zeros((256, 3))
+width = 80
+height = 50
+screen_width = 800
+screen_height = 500
+membuffer = np.zeros((width,height), np.int8)
+colour_map = np.zeros((256, 3))
 
 def add_fire():
      
-     for x in range(0,width):
-        buffer[x][height-1] = random.randint(0,255)          
+    for x in range(0,width):
+       buffer[x][height-1] = random.randint(0,255)          
 
 def fire():
-     for x in range(0,width):
-          for y in range(0,height):
-               buffer[x][y] = (buffer[(x-1)%width][(y+1)%height] + buffer[x][(y+1)%height] + buffer[(x+1)%width][(y+1)%height] + buffer[x][(y+2)%height])>>2
+# Créer un tableau pour stocker les valeurs calculées
+    result = np.zeros_like(buffer)
+
+# Parcourir les indices x et y, mais exclure les bords
+    for x in range(0, width):
+        for y in range(0, height):
+            result[x, y] = (buffer[(x-1)%width, (y+1)%height] + buffer[x, (y+1)%height] + buffer[(x+1)%width, (y+1)%height] + buffer[x, (y+2)%height]) >>2
+
+# Mettre à jour les valeurs dans 'a' avec les valeurs calculées
+    buffer[0:width, 0:height] = result[0:width, 0:height]     
+
 
 for i in range(0,64):
         colour_map[i][0] = i * 4
@@ -44,6 +52,8 @@ surface = pygame.Surface((width,height),0,8)
 surface.set_palette(colour_map)
 
 buffer = pygame.surfarray.array2d(surface)
+clock = pygame.time.Clock()
+
 running = True
 
 while running:
@@ -52,6 +62,9 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+    clock.tick()
+    print(clock.get_fps())
 
     add_fire()
     fire()
