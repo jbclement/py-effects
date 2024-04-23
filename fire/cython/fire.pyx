@@ -2,21 +2,26 @@ import pygame
 import numpy as np
 import random
 
-width = 160
-height = 100
-screen_width = 320
-screen_height = 200
-membuffer = np.zeros((width,height), np.int8)
-colour_map = np.zeros((256, 3))
+DTYPE = np.intc
+
+
+cdef Py_ssize_t width = 160
+cdef Py_ssize_t height = 100
+cdef int screen_width = 320
+cdef int screen_height = 200
+membuffer = np.zeros((width,height), dtype=DTYPE)
+colour_map = np.zeros((256, 3), dtype=DTYPE)
 
 def add_fire():
-     
+    cdef Py_ssize_t x
+
     for x in range(0,width):
        buffer[x][height-1] = random.randint(0,255)          
 
 def fire():
+    cdef Py_ssize_t x,y
 # Créer un tableau pour stocker les valeurs calculées
-    result = np.zeros_like(buffer)
+    result = np.zeros_like(buffer, dtype=DTYPE)
 
 # Parcourir les indices x et y, mais exclure les bords
     for x in range(0, width):
@@ -27,6 +32,7 @@ def fire():
     buffer[0:width, 0:height] = result[0:width, 0:height]     
 
 
+cdef int i
 for i in range(0,64):
         colour_map[i][0] = i * 4
         colour_map[i][1] = 0
