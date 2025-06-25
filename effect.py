@@ -18,7 +18,7 @@ class App:
     def update(self):
         self.fire.update()
         self.clock.tick()
-        #pygame.display.set_caption(f'{self.clock.get_fps() : .1f}')
+        pygame.display.set_caption(f'{self.clock.get_fps() : .1f}')
 
     def draw(self):
         self.fire.draw()
